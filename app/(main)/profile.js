@@ -13,6 +13,7 @@ import { router } from "expo-router";
 import { FontAwesome5 } from "@expo/vector-icons";
 import Api from "../../api/api";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function Profile() {
   const [isNotification, setNotification] = useState(0);
   const [isEnabled, setIsEnabled] = useState(true);
@@ -59,8 +60,7 @@ export default function Profile() {
   //   router.replace("/home");
   // };
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar translucent={false} backgroundColor="#fff" style="dark" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={[styles.container]}>
         {/* Profile Text */}
         <View style={[styles.profileTextParent]}>
@@ -155,7 +155,7 @@ export default function Profile() {
         </View>
         {/* End Button Edit */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

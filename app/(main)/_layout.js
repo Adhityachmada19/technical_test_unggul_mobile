@@ -11,7 +11,10 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { usePathname } from "expo-router";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+
 export default function MainLayoutParent() {
+  const insets = useSafeAreaInsets();
   const [fontsLoaded] = useFonts({
     PoppinsThin: require("../../assets/fonts/Poppins/Poppins-Thin.ttf"),
     PoppinsLight: require("../../assets/fonts/Poppins/Poppins-Light.ttf"),
@@ -42,7 +45,7 @@ export default function MainLayoutParent() {
           headerShown: false,
           tabBarStyle: {
             backgroundColor: "#fff",
-            height: 70,
+            height: 70 + insets.bottom,
             borderTopLeftRadius: 15,
             borderTopRightRadius: 15,
             position: "absolute",

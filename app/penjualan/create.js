@@ -18,6 +18,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import { Picker } from "@react-native-picker/picker";
 import { formatRupiah } from "../../lib/FormatRupiah";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PenjualanCreate = () => {
   const router = useRouter();
@@ -159,9 +160,8 @@ const PenjualanCreate = () => {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ToastManager />
-      <StatusBar translucent={false} backgroundColor="#fff" style="dark" />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Button Indicator */}
         <View style={[styles.buttonIndicator]}>
@@ -245,13 +245,23 @@ const PenjualanCreate = () => {
                 }}
               >
                 <Picker.Item label="-- Pilih Barang --" value="" />
-                {barangList.map((barang) => (
-                  <Picker.Item
-                    key={barang.kode}
-                    label={`${barang.nama} (${barang.kode})`}
-                    value={barang.kode}
-                  />
-                ))}
+                {barangList
+                  .filter((barang) => {
+                    // Filter barang agar yang sudah dipilih di item lain tidak muncul
+                    return (
+                      barang.kode === item.kode || // tetap tampilkan barang yang sudah dipilih di baris ini
+                      !items.some(
+                        (itm, idx) => itm.kode === barang.kode && idx !== index
+                      )
+                    );
+                  })
+                  .map((barang) => (
+                    <Picker.Item
+                      key={barang.kode}
+                      label={`${barang.nama} (${barang.kode})`}
+                      value={barang.kode}
+                    />
+                  ))}
               </Picker>
 
               <TextInput
@@ -320,22 +330,21 @@ const PenjualanCreate = () => {
         {/* Total Keseluruhan */}
         <View
           style={{
-            marginTop: 10,
-            padding: 10,
-            backgroundColor: "#d0eec6",
-            borderRadius: 10,
-            marginBottom: 5,
+            borderTopWidth: 1,
+            borderColor: "#eee",
+            paddingVertical: 10,
+            marginBottom: 15,
           }}
         >
           <Text
             style={{
               fontSize: 18,
               fontFamily: "PoppinsBold",
-              textAlign: "right",
               color: "#027335",
+              textAlign: "right",
             }}
           >
-            Total Keseluruhan:{formatRupiah(totalKeseluruhan)}
+            Total: {formatRupiah(totalKeseluruhan)}
           </Text>
         </View>
 
@@ -351,7 +360,7 @@ const PenjualanCreate = () => {
           )}
         </TouchableOpacity>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -395,13 +404,13 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   textInput: {
-    paddingLeft: 10,
-    height: 50,
-    marginVertical: 5,
-    backgroundColor: "#eee",
+    borderWidth: 1,
+    borderColor: "#027335",
+    paddingHorizontal: 15,
     borderRadius: 10,
-    fontFamily: "PoppinsMedium",
-    fontSize: 15,
+    height: 45,
+    fontFamily: "PoppinsRegular",
+    marginBottom: 10,
   },
   label: {
     marginVertical: 10,

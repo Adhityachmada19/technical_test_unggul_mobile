@@ -8,6 +8,7 @@ import { router, useFocusEffect } from "expo-router";
 import { formatRupiah } from "../../lib/FormatRupiah";
 import { Swipeable } from "react-native-gesture-handler";
 import ToastManager, { Toast } from "toastify-react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function Pelanggan() {
   const [pelanggans, setPelanggans] = useState([]);
   const [page, setPage] = useState(1);
@@ -146,8 +147,7 @@ export default function Pelanggan() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar translucent={false} backgroundColor="#fff" style="dark" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
         {/* Barang Text */}
         <View style={[styles.barangTextParent]}>
@@ -211,7 +211,7 @@ export default function Pelanggan() {
         />
       </View>
       <ToastManager />
-    </View>
+    </SafeAreaView>
   );
 }
 

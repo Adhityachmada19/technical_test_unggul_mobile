@@ -18,6 +18,7 @@ import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import { Picker } from "@react-native-picker/picker";
 import { formatRupiah } from "../../lib/FormatRupiah";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const PenjualanUpdate = () => {
   const router = useRouter();
@@ -175,9 +176,8 @@ const PenjualanUpdate = () => {
   }
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ToastManager />
-      <StatusBar translucent={false} backgroundColor="#fff" style="dark" />
       <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
         {/* Button Back */}
         <View style={[styles.buttonIndicator]}>
@@ -257,13 +257,23 @@ const PenjualanUpdate = () => {
                 }}
               >
                 <Picker.Item label="-- Pilih Barang --" value="" />
-                {barangList.map((barang) => (
-                  <Picker.Item
-                    key={barang.kode}
-                    label={`${barang.nama} (${barang.kode})`}
-                    value={barang.kode}
-                  />
-                ))}
+                {barangList
+                  .filter((barang) => {
+                    // Filter barang agar yang sudah dipilih di item lain tidak muncul
+                    return (
+                      barang.kode === item.kode || // tetap tampilkan barang yang sudah dipilih di baris ini
+                      !items.some(
+                        (itm, idx) => itm.kode === barang.kode && idx !== index
+                      )
+                    );
+                  })
+                  .map((barang) => (
+                    <Picker.Item
+                      key={barang.kode}
+                      label={`${barang.nama} (${barang.kode})`}
+                      value={barang.kode}
+                    />
+                  ))}
               </Picker>
 
               <TextInput
@@ -384,7 +394,7 @@ const PenjualanUpdate = () => {
           </TouchableOpacity>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 

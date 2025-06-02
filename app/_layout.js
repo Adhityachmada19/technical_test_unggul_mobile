@@ -1,6 +1,7 @@
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
 import { View, ActivityIndicator } from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function MainLayoutParent() {
   const [fontsLoaded] = useFonts({
@@ -16,9 +17,13 @@ export default function MainLayoutParent() {
 
   if (!fontsLoaded) {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" />
-      </View>
+      <SafeAreaProvider style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <ActivityIndicator size="large" />
+        </View>
+      </SafeAreaProvider>
     );
   }
   return <Stack screenOptions={{ headerShown: false }} />;

@@ -15,6 +15,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../../api/api";
 import ToastManager, { Toast } from "toastify-react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function BarangCreate() {
   const [nama, setNama] = useState("");
@@ -67,9 +68,8 @@ export default function BarangCreate() {
   };
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <ToastManager />
-      <StatusBar translucent={false} backgroundColor="#fff" style="dark" />
       <View style={[styles.container]}>
         {/* Button Indicator  */}
         <View style={[styles.buttonIndicator]}>
@@ -142,7 +142,7 @@ export default function BarangCreate() {
         </View>
         {/* End Button Edit */}
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

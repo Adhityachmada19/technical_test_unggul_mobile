@@ -17,6 +17,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import Api from "../../api/api";
 
 import { formatRupiah } from "../../lib/FormatRupiah";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function home() {
   const [totalPelanggan, setTotalPelanggan] = useState(0);
   const [totalBarang, setTotalBarang] = useState(0);
@@ -84,8 +85,7 @@ export default function home() {
   );
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#fff" }}>
-      <StatusBar translucent={false} backgroundColor="#fff" style="dark" />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       <View style={styles.container}>
         {/* Headers */}
         <View style={styles.headers}>
@@ -254,7 +254,7 @@ export default function home() {
           {/* End Top Pelanggan */}
         </ScrollView>
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 

@@ -16,6 +16,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Api from "../../api/api";
 import ToastManager, { Toast } from "toastify-react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -67,106 +68,106 @@ export default function Login() {
   };
 
   return (
-    <ImageBackground
-      source={require("../../assets/image/auth/imageBackground.png")}
-      style={styles.container}
-    >
-      <StatusBar translucent={true} style="dark" />
-
-      <View style={styles.content}>
-        <View style={styles.viewTextBrand}>
-          <Text style={styles.textHeaderBrand}>Toko Ku {"\n"}</Text>
-        </View>
-        <Text style={styles.textHeader}>Welcome back</Text>
-
-        <View style={styles.formControl}>
-          {validation?.message && (
-            <Text
-              style={{ color: "red", textAlign: "center", marginBottom: 8 }}
-            >
-              {validation.message}
-            </Text>
-          )}
-          <View style={styles.formControlParent}>
-            <Icon
-              name="user"
-              size={20}
-              style={[
-                styles.iconLeft,
-                handleFocusEmail && styles.iconLeftActive,
-              ]}
-            />
-            <TextInput
-              placeholder="Email"
-              autoCorrect={false}
-              autoComplete="email"
-              onFocus={handleFocusEmailClick}
-              style={[
-                styles.textInput,
-                handleFocusEmail && styles.textInputActive,
-              ]}
-              value={email}
-              onChangeText={(text) => setEmail(text)}
-            />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <ImageBackground
+        source={require("../../assets/image/auth/imageBackground.png")}
+        style={styles.container}
+      >
+        <View style={styles.content}>
+          <View style={styles.viewTextBrand}>
+            <Text style={styles.textHeaderBrand}>Toko Ku {"\n"}</Text>
           </View>
+          <Text style={styles.textHeader}>Welcome back</Text>
 
-          {validation?.email && (
-            <Text style={{ color: "red", marginBottom: 8 }}>
-              {validation.email[0]}
-            </Text>
-          )}
-          <View style={styles.formControlParent}>
-            <Icon
-              name="lock"
-              size={20}
-              style={[
-                styles.iconLeft,
-                handleFocusPassword && styles.iconLeftActive,
-              ]}
-            />
-            <TextInput
-              placeholder="Password"
-              secureTextEntry={handleShowPassword}
-              onFocus={handleFocusPasswordClick}
-              style={[
-                styles.textInput,
-                handleFocusPassword && styles.textInputActive,
-              ]}
-              value={password}
-              onChangeText={(text) => setPassword(text)}
-            />
-            <TouchableOpacity
-              style={styles.buttonRightEyePassword}
-              onPress={showPassword}
-            >
+          <View style={styles.formControl}>
+            {validation?.message && (
+              <Text
+                style={{ color: "red", textAlign: "center", marginBottom: 8 }}
+              >
+                {validation.message}
+              </Text>
+            )}
+            <View style={styles.formControlParent}>
               <Icon
-                name={handleShowPassword ? "eye" : "eye-off"}
+                name="user"
                 size={20}
                 style={[
-                  styles.iconRight,
-                  handleFocusPassword && styles.iconRightActive,
+                  styles.iconLeft,
+                  handleFocusEmail && styles.iconLeftActive,
                 ]}
               />
+              <TextInput
+                placeholder="Email"
+                autoCorrect={false}
+                autoComplete="email"
+                onFocus={handleFocusEmailClick}
+                style={[
+                  styles.textInput,
+                  handleFocusEmail && styles.textInputActive,
+                ]}
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+              />
+            </View>
+
+            {validation?.email && (
+              <Text style={{ color: "red", marginBottom: 8 }}>
+                {validation.email[0]}
+              </Text>
+            )}
+            <View style={styles.formControlParent}>
+              <Icon
+                name="lock"
+                size={20}
+                style={[
+                  styles.iconLeft,
+                  handleFocusPassword && styles.iconLeftActive,
+                ]}
+              />
+              <TextInput
+                placeholder="Password"
+                secureTextEntry={handleShowPassword}
+                onFocus={handleFocusPasswordClick}
+                style={[
+                  styles.textInput,
+                  handleFocusPassword && styles.textInputActive,
+                ]}
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+              />
+              <TouchableOpacity
+                style={styles.buttonRightEyePassword}
+                onPress={showPassword}
+              >
+                <Icon
+                  name={handleShowPassword ? "eye" : "eye-off"}
+                  size={20}
+                  style={[
+                    styles.iconRight,
+                    handleFocusPassword && styles.iconRightActive,
+                  ]}
+                />
+              </TouchableOpacity>
+            </View>
+            {validation?.password && (
+              <Text style={{ color: "red", marginBottom: 8 }}>
+                {validation.password[0]}
+              </Text>
+            )}
+            <TouchableOpacity
+              style={styles.viewButton}
+              onPress={handletoHome}
+              disabled={loading}
+            >
+              <Text style={styles.textButton}>
+                {loading ? "Loading..." : "SIGN IN"}
+              </Text>
             </TouchableOpacity>
           </View>
-          {validation?.password && (
-            <Text style={{ color: "red", marginBottom: 8 }}>
-              {validation.password[0]}
-            </Text>
-          )}
-          <TouchableOpacity
-            style={styles.viewButton}
-            onPress={handletoHome}
-            disabled={loading}
-          >
-            <Text style={styles.textButton}>
-              {loading ? "Loading..." : "SIGN IN"}
-            </Text>
-          </TouchableOpacity>
         </View>
-      </View>
-      <ToastManager />
-    </ImageBackground>
+        <ToastManager />
+      </ImageBackground>
+    </SafeAreaView>
   );
 }
 
